@@ -1,0 +1,130 @@
+---
+title: "Docker Best Practices for Production"
+excerpt: "Essential Docker practices for building secure, efficient, and production-ready containers."
+date: "2025-05-10"
+tags: ["Docker", "DevOps", "Containers"]
+image: "/blog/docker.jpg"
+---
+
+# Docker Best Practices for Production
+
+Containerizing applications with Docker requires careful attention to security, efficiency, and maintainability. Let's explore essential practices for production-ready containers.
+
+## Use Multi-stage Builds
+
+Multi-stage builds reduce final image size:
+
+```dockerfile
+# Build stage
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM node:18-alpine
+WORKDIR /app
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+## Security Best Practices
+
+### Run as Non-Root User
+
+```dockerfile
+RUN addgroup -g 1001 -S appgroup && \
+    adduser -u 1001 -S appuser -G appgroup
+
+USER appuser
+```
+
+### Scan for Vulnerabilities
+
+```bash
+# Use Docker Scout or Trivy
+docker scout cves myimage:latest
+```
+
+## Optimize Layer Caching
+
+Order instructions from least to most frequently changing:
+
+```dockerfile
+# Good: Dependencies installed before source code
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+# Bad: Source copied before dependencies
+COPY . .
+RUN npm install
+```
+
+## Health Checks
+
+Add health checks to your containers:
+
+```dockerfile
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/health || exit 1
+```
+
+## Docker Compose for Development
+
+```yaml
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+```
+
+## Resource Limits
+
+Always set resource limits in production:
+
+```yaml
+services:
+  app:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+```
+
+## Conclusion
+
+Following these Docker best practices ensures:
+- Smaller, more efficient images
+- Better security posture
+- Faster builds and deployments
+- More reliable production systems

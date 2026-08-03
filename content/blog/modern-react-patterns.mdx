@@ -1,0 +1,123 @@
+---
+title: "Modern React Patterns in 2025"
+excerpt: "Exploring the latest React patterns including Server Components, Suspense, and concurrent features."
+date: "2025-06-20"
+tags: ["React", "Next.js", "Frontend"]
+image: "/blog/react-patterns.jpg"
+---
+
+# Modern React Patterns in 2025
+
+React has evolved significantly over the years. Let's explore the modern patterns that are shaping how we build applications today.
+
+## Server Components
+
+Server Components represent a paradigm shift in how we think about React applications:
+
+```tsx
+// This component runs on the server only
+async function BlogPost({ slug }: { slug: string }) {
+  const post = await getPost(slug);
+  
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <p>{post.content}</p>
+    </article>
+  );
+}
+```
+
+### Benefits
+
+- **Reduced bundle size**: Server components don't ship to the client
+- **Direct database access**: Query databases directly in components
+- **Better SEO**: Content is rendered on the server
+
+## Suspense Boundaries
+
+Use Suspense to handle loading states elegantly:
+
+```tsx
+import { Suspense } from 'react';
+
+function Page() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <BlogPost slug="my-post" />
+    </Suspense>
+  );
+}
+```
+
+## Concurrent Features
+
+React 18 introduced concurrent rendering:
+
+```tsx
+import { useTransition, useDeferredValue } from 'react';
+
+function SearchPage() {
+  const [isPending, startTransition] = useTransition();
+  const [query, setQuery] = useState('');
+  const deferredQuery = useDeferredValue(query);
+  
+  return (
+    <div>
+      <input
+        value={query}
+        onChange={(e) => startTransition(() => setQuery(e.target.value))}
+      />
+      <SearchResults query={deferredQuery} />
+    </div>
+  );
+}
+```
+
+## Custom Hooks for Logic Reuse
+
+Extract complex logic into reusable hooks:
+
+```tsx
+function useLocalStorage<T>(key: string, initialValue: T) {
+  const [value, setValue] = useState<T>(() => {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : initialValue;
+  });
+  
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+  
+  return [value, setValue] as const;
+}
+```
+
+## Composition Over Inheritance
+
+Use composition patterns for flexible components:
+
+```tsx
+function Card({ children }: { children: React.ReactNode }) {
+  return <div className="card">{children}</div>;
+}
+
+Card.Header = function CardHeader({ children }: { children: React.ReactNode }) {
+  return <div className="card-header">{children}</div>;
+};
+
+Card.Body = function CardBody({ children }: { children: React.ReactNode }) {
+  return <div className="card-body">{children}</div>;
+};
+```
+
+## Conclusion
+
+Modern React development emphasizes:
+- Server-side rendering with Server Components
+- Graceful loading states with Suspense
+- Responsive UIs with concurrent features
+- Reusable logic with custom hooks
+- Flexible composition patterns
+
+Stay up to date with these patterns to build better React applications.
