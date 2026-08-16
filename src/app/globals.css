@@ -142,6 +142,13 @@ body {
   outline-offset: 2px;
 }
 
+/* Enhanced focus for form inputs */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
 /* Skip to content link for accessibility */
 .skip-link {
   position: absolute;

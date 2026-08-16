@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun, Download } from "lucide-react";
+import { GithubIcon } from "@/components/ui/social-icons";
+import Image from "next/image";
+import Link from "next/link";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -26,41 +29,33 @@ export function Navbar() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const { isDark, toggleTheme } = useTheme();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+  const handleScroll = useCallback(() => {
+    const scrolled = window.scrollY > 50;
+    setIsScrolled(scrolled);
 
-      // Calculate scroll progress
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
-      setScrollProgress(progress);
+    // Calculate scroll progress
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+    setScrollProgress(progress);
 
-      // Update active section
-      const sections = navItems.map((item) => item.href.slice(1));
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const element = document.getElementById(sections[i]);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(sections[i]);
-            break;
-          }
+    // Update active section
+    const sections = navItems.map((item) => item.href.slice(1));
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const element = document.getElementById(sections[i]);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= 150) {
+          setActiveSection(sections[i]);
+          break;
         }
       }
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, []);
 
-  // Lock body scroll when the mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMobileMenuOpen]);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   // Close mobile menu when resizing to desktop
   useEffect(() => {
@@ -71,9 +66,21 @@ export function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  const handleNavClick = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
+
   return (
     <>
-      {/* Skip to content link for accessibility */}
+      {/* Skip to content link */}
       <a
         href="#home"
         className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-purple-600 focus:text-white focus:text-sm"
@@ -88,44 +95,53 @@ export function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
-            ? "bg-background/80 backdrop-blur-xl border-b border-white/10"
+            ? "bg-background/80 backdrop-blur-xl border-b border-white/10 shadow-lg"
             : "bg-transparent"
         )}
         aria-label="Main navigation"
       >
         {/* Scroll Progress Bar */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-[2px] bg-white/10"
-          aria-hidden="true"
-        >
+        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white/5">
           <motion.div
             className="h-full bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500"
             style={{ width: `${scrollProgress}%` }}
+            transition={{ duration: 0.1 }}
           />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Logo */}
-            <motion.a
-              href="#home"
-              className="text-2xl font-bold gradient-text"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label={`${"Anand"} - Home`}
+            {/* Logo & Brand */}
+            <motion.div
+              className="flex items-center gap-3 md:gap-4"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              Anand
-            </motion.a>
+              <Link
+                href="#home"
+                className="relative h-9 md:h-10 w-auto flex items-center justify-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label="NanoMachine - Home"
+              >
+                <Image
+                  src="/brand/nanomachine-wordmark.png"
+                  alt="NanoMachine"
+                  width={160}
+                  height={42}
+                  priority
+                  className="h-9 md:h-10 w-auto object-contain"
+                />
+              </Link>
+            </motion.div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1">
+            <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
                   aria-current={activeSection === item.href.slice(1) ? "page" : undefined}
                   className={cn(
-                    "relative px-4 py-2 text-sm font-medium transition-colors",
+                    "relative px-4 py-2 text-sm font-medium transition-colors duration-200",
                     activeSection === item.href.slice(1)
                       ? "text-white"
                       : "text-white/70 hover:text-white"
@@ -134,8 +150,8 @@ export function Navbar() {
                   {item.name}
                   {activeSection === item.href.slice(1) && (
                     <motion.div
-                      layoutId="activeSection"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-cyan-500"
+                      layoutId="activeNav"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-t-full"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -143,15 +159,45 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* Right Side Actions */}
-            <div className="flex items-center space-x-2 sm:space-x-4">
+            {/* Right Actions */}
+            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+              {/* Resume Button - Desktop */}
+              <Button
+                variant="secondary"
+                size="sm"
+                className="hidden md:flex gap-2"
+                asChild
+              >
+                <a href="/ANAND_N_resume_ATS_New.pdf" download>
+                  <Download className="w-4 h-4" />
+                  <span className="hidden sm:inline">Resume</span>
+                </a>
+              </Button>
+
+              {/* GitHub Button - Desktop */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hidden md:flex"
+                asChild
+              >
+                <a
+                  href="https://github.com/900Gang"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                >
+                  <GithubIcon size={20} className="w-5 h-5" />
+                </a>
+              </Button>
+
               {/* Theme Toggle */}
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={toggleTheme}
                 aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-                className="relative w-10 h-10 rounded-full"
+                className="relative"
               >
                 <AnimatePresence mode="wait" initial={false}>
                   {isDark ? (
@@ -184,17 +230,35 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden w-10 h-10"
-                onClick={() => setIsMobileMenuOpen((open) => !open)}
+                className="lg:hidden"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-menu"
               >
-                {isMobileMenuOpen ? (
-                  <X className="w-5 h-5" />
-                ) : (
-                  <Menu className="w-5 h-5" />
-                )}
+                <AnimatePresence mode="wait">
+                  {isMobileMenuOpen ? (
+                    <motion.span
+                      key="close"
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <X className="w-6 h-6" />
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="menu"
+                      initial={{ rotate: 90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: -90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Menu className="w-6 h-6" />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </Button>
             </div>
           </div>
@@ -204,37 +268,81 @@ export function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-16 z-40 lg:hidden"
-          >
-            <div className="glass-dark mx-4 mt-2 rounded-xl overflow-hidden">
-              <div className="px-4 py-6 space-y-2">
-                {navItems.map((item, index) => (
-                  <motion.a
-                    key={item.name}
-                    href={item.href}
-                    initial={{ opacity: 0, x: -20 }}
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 top-16 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
+              aria-hidden="true"
+            />
+
+            {/* Menu */}
+            <motion.div
+              id="mobile-menu"
+              initial={{ opacity: 0, y: -20, x: 20 }}
+              animate={{ opacity: 1, y: 0, x: 0 }}
+              exit={{ opacity: 0, y: -20, x: 20 }}
+              transition={{ duration: 0.2 }}
+              className="fixed right-0 top-16 z-50 w-full max-w-xs lg:hidden"
+            >
+              <div className="mx-4 mt-2 rounded-2xl glass overflow-hidden shadow-xl">
+                <div className="px-4 py-6 space-y-1">
+                  {navItems.map((item, index) => (
+                    <motion.a
+                      key={item.name}
+                      href={item.href}
+                      onClick={handleNavClick}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05, duration: 0.2 }}
+                      className={cn(
+                        "block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200",
+                        activeSection === item.href.slice(1)
+                          ? "bg-gradient-to-r from-purple-600/20 to-cyan-500/20 text-white"
+                          : "text-white/70 hover:text-white hover:bg-white/5"
+                      )}
+                    >
+                      {item.name}
+                    </motion.a>
+                  ))}
+
+                  {/* Mobile Menu Divider */}
+                  <div className="my-2 h-px bg-white/10" />
+
+                  {/* Mobile Action Buttons */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      "block px-4 py-3 rounded-lg text-base font-medium transition-all",
-                      activeSection === item.href.slice(1)
-                        ? "bg-gradient-to-r from-purple-600/20 to-cyan-500/20 text-white"
-                        : "text-white/70 hover:text-white hover:bg-white/5"
-                    )}
+                    transition={{ delay: navItems.length * 0.05, duration: 0.2 }}
+                    className="pt-2 space-y-2"
                   >
-                    {item.name}
-                  </motion.a>
-                ))}
+                    <a
+                      href="/ANAND_N_resume_ATS_New.pdf"
+                      download
+                      onClick={handleNavClick}
+                      className="flex items-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-600/20 to-cyan-500/20 text-white/80 hover:text-white transition-colors"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download Resume
+                    </a>
+                    <a
+                      href="https://github.com/900Gang"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleNavClick}
+                      className="flex items-center gap-2 px-4 py-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-white transition-colors"
+                    >
+                      <GithubIcon size={16} className="w-4 h-4" />
+                      GitHub
+                    </a>
+                  </motion.div>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

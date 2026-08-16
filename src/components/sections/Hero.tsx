@@ -97,7 +97,7 @@ export function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden scroll-mt-24"
     >
       {/* 3D Background */}
       <HeroScene />
@@ -105,7 +105,7 @@ export function Hero() {
       {/* Content */}
       <motion.div
         style={{ y, opacity }}
-        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+        className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 sm:pt-32 sm:pb-24"
       >
         <motion.div
           variants={containerVariants}
@@ -114,7 +114,7 @@ export function Hero() {
           className="text-center"
         >
           {/* Profile Image */}
-          <motion.div variants={itemVariants} className="mb-8 flex justify-center">
+          <motion.div variants={itemVariants} className="mb-6 sm:mb-8 flex justify-center">
             <div className="relative">
               <motion.div
                 animate={{ rotate: 360 }}
@@ -122,7 +122,7 @@ export function Hero() {
                 className="absolute -inset-2 rounded-full bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 opacity-75 blur-sm"
                 aria-hidden="true"
               />
-              <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-background">
+              <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-background shadow-2xl">
                 <Image
                   src="/profile_pic.jpg"
                   alt={`Profile picture of ${portfolio.personal.name}`}
@@ -138,7 +138,7 @@ export function Hero() {
           {/* Greeting */}
           <motion.p
             variants={itemVariants}
-            className="text-lg sm:text-xl text-white/60 mb-4"
+            className="text-base sm:text-lg text-white/60 mb-3 sm:mb-4"
           >
             {portfolio.hero.greeting}
           </motion.p>
@@ -146,7 +146,7 @@ export function Hero() {
           {/* Name */}
           <motion.h1
             variants={itemVariants}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-5 sm:mb-6"
           >
             <span className="gradient-text">{portfolio.hero.name}</span>
           </motion.h1>
@@ -154,10 +154,10 @@ export function Hero() {
           {/* Animated Title */}
           <motion.div
             variants={itemVariants}
-            className="h-12 sm:h-16 mb-8 flex items-center justify-center"
+            className="h-10 sm:h-14 mb-6 sm:mb-8 flex items-center justify-center"
             aria-live="polite"
           >
-            <span className="text-2xl sm:text-3xl md:text-4xl font-medium text-white/80">
+            <span className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white/85">
               {displayedText}
               <span className="inline-block w-0.5 h-8 sm:h-10 bg-white/80 ml-1 animate-pulse" />
             </span>
@@ -166,7 +166,7 @@ export function Hero() {
           {/* Bio */}
           <motion.p
             variants={itemVariants}
-            className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10"
+            className="text-base sm:text-lg md:text-xl text-white/65 leading-relaxed max-w-3xl mx-auto mb-8 sm:mb-10"
           >
             {portfolio.personal.subtitle}
           </motion.p>
@@ -174,7 +174,7 @@ export function Hero() {
           {/* CTA Buttons */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap justify-center gap-4 mb-12"
+            className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-10"
           >
             <Button size="lg" className="group" asChild>
               <a href="/ANAND_N_resume_ATS_New.pdf" download>

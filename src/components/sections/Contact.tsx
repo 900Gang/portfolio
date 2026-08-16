@@ -152,11 +152,28 @@ export function Contact() {
                 </div>
               </div>
 
-              {/* Map or Additional Visual */}
-              <div className="glass rounded-2xl p-8 h-64 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🌍</div>
-                  <p className="text-white/60">Available for remote work worldwide</p>
+              {/* Availability Status */}
+              <div className="glass rounded-2xl p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="relative">
+                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                    <div className="absolute inset-0 w-3 h-3 rounded-full bg-green-400 animate-ping" />
+                  </div>
+                  <span className="text-sm font-medium text-green-400">Open to opportunities</span>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-white/60">Availability</span>
+                    <span className="text-sm font-medium">Full-time / Freelance</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-white/60">Response time</span>
+                    <span className="text-sm font-medium">Within 24 hours</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-white/60">Timezone</span>
+                    <span className="text-sm font-medium">IST (UTC +5:30)</span>
+                  </div>
                 </div>
               </div>
             </motion.div>
