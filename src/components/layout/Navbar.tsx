@@ -60,7 +60,7 @@ export function Navbar() {
   // Close mobile menu when resizing to desktop
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) setIsMobileMenuOpen(false);
+      if (window.innerWidth >= 1280) setIsMobileMenuOpen(false);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -72,6 +72,16 @@ export function Navbar() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [isMobileMenuOpen]);
+
+  // Close mobile menu on Escape
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isMobileMenuOpen]);
 
   const handleNavClick = useCallback(() => {
@@ -113,50 +123,54 @@ export function Navbar() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo & Brand */}
             <motion.div
-              className="flex items-center gap-3 md:gap-4"
+              className="flex items-center shrink-0"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <Link
                 href="#home"
-                className="relative h-9 md:h-10 w-auto flex items-center justify-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label="NanoMachine - Home"
               >
                 <Image
-                  src="/brand/nanomachine-wordmark.png"
-                  alt="NanoMachine"
-                  width={160}
-                  height={42}
-                  priority
-                  className="h-9 md:h-10 w-auto object-contain"
+                  src="/brand/nanomachine-mark.png"
+                  alt=""
+                  width={96}
+                  height={96}
+                  className="h-8 w-8 sm:h-9 sm:w-9 object-contain"
                 />
+                <span className="text-lg sm:text-xl font-semibold tracking-tight text-white whitespace-nowrap">
+                  NanoMachine
+                </span>
               </Link>
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  aria-current={activeSection === item.href.slice(1) ? "page" : undefined}
-                  className={cn(
-                    "relative px-4 py-2 text-sm font-medium transition-colors duration-200",
-                    activeSection === item.href.slice(1)
-                      ? "text-white"
-                      : "text-white/70 hover:text-white"
-                  )}
-                >
-                  {item.name}
-                  {activeSection === item.href.slice(1) && (
-                    <motion.div
-                      layoutId="activeNav"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-t-full"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </a>
-              ))}
+            <div className="hidden xl:flex items-center gap-6 2xl:gap-8">
+              {navItems.map((item) => {
+                const isActive = activeSection === item.href.slice(1);
+                return (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      "relative py-2 text-sm font-medium tracking-tight transition-colors duration-200",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-4 focus-visible:ring-offset-background rounded-sm",
+                      isActive ? "text-white" : "text-white/60 hover:text-white"
+                    )}
+                  >
+                    {item.name}
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeNav"
+                        className="absolute -bottom-0.5 left-0 right-0 h-px bg-gradient-to-r from-purple-500 to-cyan-400"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </a>
+                );
+              })}
             </div>
 
             {/* Right Actions */}
@@ -165,7 +179,7 @@ export function Navbar() {
               <Button
                 variant="secondary"
                 size="sm"
-                className="hidden md:flex gap-2"
+                className="hidden xl:flex gap-2"
                 asChild
               >
                 <a href="/ANAND_N_resume_ATS_New.pdf" download>
@@ -178,7 +192,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="hidden md:flex"
+                className="hidden xl:flex"
                 asChild
               >
                 <a
@@ -230,7 +244,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden"
+                className="xl:hidden"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMobileMenuOpen}
@@ -275,7 +289,7 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 top-16 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 top-16 z-40 bg-black/20 backdrop-blur-sm xl:hidden"
               aria-hidden="true"
             />
 
@@ -286,7 +300,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0, x: 0 }}
               exit={{ opacity: 0, y: -20, x: 20 }}
               transition={{ duration: 0.2 }}
-              className="fixed right-0 top-16 z-50 w-full max-w-xs lg:hidden"
+              className="fixed right-0 top-16 z-50 w-full max-w-xs xl:hidden"
             >
               <div className="mx-4 mt-2 rounded-2xl glass overflow-hidden shadow-xl">
                 <div className="px-4 py-6 space-y-1">
