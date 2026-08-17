@@ -4,28 +4,28 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95",
   {
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 text-white hover:shadow-glow-lg hover:scale-105 active:scale-95",
+          "bg-gradient-brand text-white hover:shadow-glow-lg hover:scale-105",
         destructive:
           "bg-red-500 text-white hover:bg-red-600",
         outline:
-          "border border-white/20 bg-transparent hover:bg-white/5 hover:border-white/40",
+          "border border-white/20 bg-transparent hover:bg-white/5 hover:border-white/40 hover:shadow-sm",
         secondary:
-          "bg-white/10 text-white hover:bg-white/20",
+          "bg-white/10 text-white hover:bg-white/20 border border-white/10",
         ghost:
           "hover:bg-white/10 hover:text-white",
         link:
           "text-purple-400 underline-offset-4 hover:underline",
         gradient:
-          "relative overflow-hidden bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 text-white before:absolute before:inset-0 before:bg-white/20 before:translate-x-[-100%] hover:before:translate-x-0 before:transition-transform before:duration-500",
+          "relative overflow-hidden bg-gradient-brand text-white before:absolute before:inset-0 before:bg-white/20 before:translate-x-[-100%] hover:before:translate-x-0 before:transition-transform before:duration-500 hover:shadow-glow",
       },
       size: {
         default: "h-11 px-6 py-2",
-        sm: "h-9 px-4",
+        sm: "h-9 px-4 text-xs",
         lg: "h-12 px-8 text-base",
         xl: "h-14 px-10 text-lg",
         icon: "h-10 w-10",
