@@ -56,10 +56,10 @@ function SkillCard({
   return (
     <motion.button
       onClick={onClick}
-      whileHover={{ scale: 1.03, y: -4 }}
+      whileHover={{ scale: 1.02, y: -2 }}
       whileTap={{ scale: 0.98 }}
       className={cn(
-        "w-full p-5 sm:p-6 rounded-2xl text-left transition-all duration-300",
+        "w-full p-6 rounded-2xl text-left transition-all duration-200",
         isActive
           ? "glass border-purple-500/50 bg-gradient-to-br from-purple-600/15 to-cyan-500/15 shadow-glow"
           : "glass hover:border-white/30 hover:bg-white/5"
@@ -116,7 +116,7 @@ export function Skills() {
     <section
       id="skills"
       ref={containerRef}
-      className="relative py-16 sm:py-24 lg:py-32 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-32 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -136,13 +136,13 @@ export function Skills() {
               My <span className="gradient-text">Skills</span>
             </h2>
             <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
-            <p className="mt-4 text-sm sm:text-base lg:text-lg text-white/60 max-w-2xl mx-auto px-2">
+            <p className="mt-4 sm:mt-6 text-sm sm:text-base lg:text-lg text-white/60 max-w-2xl mx-auto px-4">
               Technologies and tools I&apos;ve worked with to build scalable applications
             </p>
           </motion.div>
 
           {/* Skills Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">
             {categories.map((cat) => (
               <SkillCard
                 key={cat.key}
@@ -159,15 +159,15 @@ export function Skills() {
             key={activeCategory}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mt-12 p-6 sm:p-8 lg:p-10 rounded-3xl glass"
+            transition={{ duration: 0.4 }}
+            className="mt-8 p-6 sm:p-8 lg:p-10 rounded-3xl glass"
           >
-            <h3 className="text-xl sm:text-2xl font-bold mb-8 text-center text-white">
+            <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center text-white">
               {activeLabel} Skills
             </h3>
 
             {/* Skill Pills */}
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10">
               {activeSkills.map((skill, index) => (
                 <SkillPill key={skill} name={skill} index={index} />
               ))}
@@ -176,13 +176,13 @@ export function Skills() {
             {/* Progress Bars */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {activeSkills.map((skill, index) => (
-                <div key={skill} className="p-4 sm:p-6 rounded-xl glass hover:bg-white/8 transition-colors">
+                <div key={skill} className="p-4 sm:p-5 rounded-xl glass hover:bg-white/8 transition-colors">
                   <div className="flex items-center justify-between mb-3">
                     <span className="font-semibold text-sm sm:text-base">{skill}</span>
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ delay: index * 0.1, type: "spring" }}
+                      transition={{ delay: index * 0.05, type: "spring" }}
                       className="text-xs sm:text-sm font-medium px-2.5 sm:px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-cyan-500"
                     >
                       {skillLevels[skill] ?? 75}%
@@ -192,7 +192,7 @@ export function Skills() {
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${skillLevels[skill] ?? 75}%` }}
-                      transition={{ duration: 1.2, delay: index * 0.1 }}
+                      transition={{ duration: 1, delay: index * 0.05 }}
                       className="h-full rounded-full bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500"
                     />
                   </div>

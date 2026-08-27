@@ -32,7 +32,7 @@ export function Certificates() {
     <section
       id="certificates"
       ref={containerRef}
-      className="relative py-24 sm:py-32 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-32 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -46,12 +46,12 @@ export function Certificates() {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
               <span className="gradient-text">Certificates</span>
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
-            <p className="mt-4 text-lg text-white/60 max-w-2xl mx-auto">
+            <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
+            <p className="mt-4 sm:mt-6 text-sm sm:text-base lg:text-lg text-white/60 max-w-2xl mx-auto px-4">
               Professional certifications and achievements
             </p>
           </motion.div>
@@ -66,10 +66,10 @@ export function Certificates() {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 onMouseEnter={() => setHoveredId(index)}
                 onMouseLeave={() => setHoveredId(null)}
-                whileHover={{ scale: 1.03, y: -5 }}
+                whileHover={{ scale: 1.02, y: -2 }}
                 className="group relative"
               >
-                <div className="relative rounded-2xl glass overflow-hidden hover:border-purple-500/30 transition-colors">
+                <div className="relative rounded-2xl glass overflow-hidden hover:border-purple-500/30 transition-all duration-200">
                   {/* Certificate Visual */}
                   <div className="aspect-[4/3] relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-600/25 via-blue-600/15 to-cyan-500/25" />
@@ -106,8 +106,8 @@ export function Certificates() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-4">
-                    <h3 className="font-bold text-sm mb-1 line-clamp-2">{cert.title}</h3>
+                  <div className="p-5">
+                    <h3 className="font-bold text-sm mb-1 line-clamp-2 leading-snug">{cert.title}</h3>
                     <p className="text-xs text-white/60">{cert.issuer}</p>
                   </div>
                 </div>

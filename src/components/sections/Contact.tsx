@@ -80,7 +80,7 @@ export function Contact() {
     <section
       id="contact"
       ref={containerRef}
-      className="relative py-24 sm:py-32 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-32 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -95,12 +95,12 @@ export function Contact() {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
               <span className="gradient-text">Get In Touch</span>
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
-            <p className="mt-4 text-lg text-white/60 max-w-2xl mx-auto">
+            <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
+            <p className="mt-4 sm:mt-6 text-sm sm:text-base lg:text-lg text-white/60 max-w-2xl mx-auto px-4">
               Have a project in mind or want to collaborate? I&apos;d love to hear from you.
             </p>
           </motion.div>
@@ -195,7 +195,7 @@ export function Contact() {
                       aria-invalid={errors.name ? true : undefined}
                       aria-describedby={errors.name ? "name-error" : undefined}
                       className={cn(
-                        "w-full px-4 py-3 rounded-xl bg-white/5 border focus:outline-none transition-colors",
+                        "w-full h-12 px-4 py-3 rounded-xl bg-white/5 border focus:outline-none transition-colors",
                         errors.name
                           ? "border-red-400/50 focus:border-red-400"
                           : "border-white/10 focus:border-purple-500/50"
@@ -203,7 +203,7 @@ export function Contact() {
                       placeholder="Your name"
                     />
                     {errors.name && (
-                      <p id="name-error" role="alert" className="mt-1 text-sm text-red-400">
+                      <p id="name-error" role="alert" className="mt-1.5 text-sm text-red-400">
                         {errors.name.message}
                       </p>
                     )}
@@ -222,7 +222,7 @@ export function Contact() {
                       aria-invalid={errors.email ? true : undefined}
                       aria-describedby={errors.email ? "email-error" : undefined}
                       className={cn(
-                        "w-full px-4 py-3 rounded-xl bg-white/5 border focus:outline-none transition-colors",
+                        "w-full h-12 px-4 py-3 rounded-xl bg-white/5 border focus:outline-none transition-colors",
                         errors.email
                           ? "border-red-400/50 focus:border-red-400"
                           : "border-white/10 focus:border-purple-500/50"
@@ -230,7 +230,7 @@ export function Contact() {
                       placeholder="your@email.com"
                     />
                     {errors.email && (
-                      <p id="email-error" role="alert" className="mt-1 text-sm text-red-400">
+                      <p id="email-error" role="alert" className="mt-1.5 text-sm text-red-400">
                         {errors.email.message}
                       </p>
                     )}
@@ -248,7 +248,7 @@ export function Contact() {
                       aria-invalid={errors.subject ? true : undefined}
                       aria-describedby={errors.subject ? "subject-error" : undefined}
                       className={cn(
-                        "w-full px-4 py-3 rounded-xl bg-white/5 border focus:outline-none transition-colors",
+                        "w-full h-12 px-4 py-3 rounded-xl bg-white/5 border focus:outline-none transition-colors",
                         errors.subject
                           ? "border-red-400/50 focus:border-red-400"
                           : "border-white/10 focus:border-purple-500/50"
@@ -256,7 +256,7 @@ export function Contact() {
                       placeholder="What's this about?"
                     />
                     {errors.subject && (
-                      <p id="subject-error" role="alert" className="mt-1 text-sm text-red-400">
+                      <p id="subject-error" role="alert" className="mt-1.5 text-sm text-red-400">
                         {errors.subject.message}
                       </p>
                     )}
@@ -282,7 +282,7 @@ export function Contact() {
                       placeholder="Your message..."
                     />
                     {errors.message && (
-                      <p id="message-error" role="alert" className="mt-1 text-sm text-red-400">
+                      <p id="message-error" role="alert" className="mt-1.5 text-sm text-red-400">
                         {errors.message.message}
                       </p>
                     )}

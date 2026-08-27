@@ -146,7 +146,7 @@ export function Navbar() {
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className="hidden xl:flex items-center gap-6 2xl:gap-8">
+            <div className="hidden xl:flex items-center gap-8">
               {navItems.map((item) => {
                 const isActive = activeSection === item.href.slice(1);
                 return (
@@ -155,9 +155,9 @@ export function Navbar() {
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "relative py-2 text-sm font-medium tracking-tight transition-colors duration-200",
+                      "relative py-2 text-sm font-medium transition-colors duration-200",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-4 focus-visible:ring-offset-background rounded-sm",
-                      isActive ? "text-white" : "text-white/60 hover:text-white"
+                      isActive ? "text-white" : "text-white/70 hover:text-white"
                     )}
                   >
                     {item.name}
@@ -174,7 +174,7 @@ export function Navbar() {
             </div>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+            <div className="flex items-center gap-3">
               {/* Resume Button - Desktop */}
               <Button
                 variant="secondary"
@@ -184,7 +184,7 @@ export function Navbar() {
               >
                 <a href="/ANAND_N_resume_ATS_New.pdf" download>
                   <Download className="w-4 h-4" />
-                  <span className="hidden sm:inline">Resume</span>
+                  Resume
                 </a>
               </Button>
 

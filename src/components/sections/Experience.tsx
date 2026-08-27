@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Briefcase, GraduationCap, MapPin, Calendar } from "lucide-react";
 import { portfolio } from "@/data/content";
+import { cn } from "@/lib/utils";
 
 export function Experience() {
   const containerRef = useRef(null);
@@ -52,7 +53,7 @@ export function Experience() {
     <section
       id="experience"
       ref={containerRef}
-      className="relative py-24 sm:py-32 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-32 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -67,11 +68,11 @@ export function Experience() {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
               Experience &amp; <span className="gradient-text">Education</span>
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
+            <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
           </motion.div>
 
           {/* Timeline */}
@@ -97,15 +98,16 @@ export function Experience() {
                   {/* Content Card */}
                   <div className="ml-16 md:ml-0 md:w-1/2">
                     <div
-                      className={`glass rounded-2xl p-6 ${
+                      className={cn(
+                        "glass rounded-2xl p-6 hover:border-purple-500/30 transition-all duration-200",
                         index % 2 === 0 ? "md:mr-12" : "md:ml-12"
-                      }`}
+                      )}
                     >
                       {/* Header */}
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-xl font-bold">{item.title}</h3>
-                          <p className="text-purple-400 font-medium">{item.subtitle}</p>
+                      <div className="flex items-start justify-between gap-4 mb-4">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-xl font-bold line-clamp-2">{item.title}</h3>
+                          <p className="text-purple-400 font-medium text-sm mt-1">{item.subtitle}</p>
                         </div>
                         <div className="shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center">
                           <item.icon className="w-6 h-6" />
@@ -115,12 +117,12 @@ export function Experience() {
                       {/* Meta */}
                       <div className="flex flex-wrap gap-4 mb-4 text-sm text-white/60">
                         {item.location && (
-                          <span className="flex items-center gap-1">
+                          <span className="flex items-center gap-1.5">
                             <MapPin className="w-4 h-4" />
                             {item.location}
                           </span>
                         )}
-                        <span className="flex items-center gap-1">
+                        <span className="flex items-center gap-1.5">
                           <Calendar className="w-4 h-4" />
                           {item.duration}
                         </span>
@@ -131,10 +133,10 @@ export function Experience() {
                         {item.description.map((desc, i) => (
                           <li
                             key={i}
-                            className="flex items-start gap-2 text-sm text-white/70"
+                            className="flex items-start gap-2.5 text-sm text-white/70 leading-relaxed"
                           >
                             <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-purple-400 mt-2" />
-                            {desc}
+                            <span>{desc}</span>
                           </li>
                         ))}
                       </ul>

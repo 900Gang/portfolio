@@ -71,7 +71,7 @@ export function About() {
     <section
       id="about"
       ref={containerRef}
-      className="relative py-24 sm:py-32 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-32 overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 -z-10">
@@ -86,11 +86,11 @@ export function About() {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
               About <span className="gradient-text">Me</span>
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
+            <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
           </motion.div>
 
           {/* Main Content */}
@@ -139,21 +139,21 @@ export function About() {
 
             {/* Right - Content */}
             <motion.div variants={itemVariants} className="space-y-6">
-              <h3 className="text-2xl sm:text-3xl font-semibold">
+              <h3 className="text-2xl sm:text-3xl font-semibold leading-tight">
                 {portfolio.personal.subtitle}
               </h3>
 
-              <div className="space-y-4 text-white/70 leading-relaxed whitespace-pre-line">
+              <div className="space-y-4 text-white/70 text-base leading-relaxed whitespace-pre-line">
                 {portfolio.about.description}
               </div>
 
               {/* Highlights */}
               {highlights.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
                   {highlights.map((highlight) => (
                     <div key={highlight} className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 shrink-0 text-purple-400" />
-                      <span className="text-sm">{highlight}</span>
+                      <span className="text-sm leading-snug">{highlight}</span>
                     </div>
                   ))}
                 </div>
@@ -161,15 +161,15 @@ export function About() {
 
               {/* Education card */}
               {education && (
-                <div className="p-4 rounded-2xl glass flex items-start gap-3">
+                <div className="p-5 rounded-2xl glass flex items-start gap-3 hover:border-purple-500/30 transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center shrink-0">
                     <GraduationCap className="w-5 h-5" />
                   </div>
-                  <div>
-                    <p className="font-semibold text-sm">
+                  <div className="min-w-0">
+                    <p className="font-semibold text-sm leading-snug">
                       {education.degree} · {education.field}
                     </p>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white/60 mt-1 leading-snug">
                       {education.institution} · {education.duration}
                     </p>
                   </div>
@@ -181,16 +181,16 @@ export function About() {
           {/* Stats Section */}
           <motion.div
             variants={itemVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
           >
             {portfolio.about.stats.map((stat) => (
               <motion.div
                 key={stat.label}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="text-center p-6 rounded-2xl glass hover:border-purple-500/30 transition-colors"
+                whileHover={{ scale: 1.02, y: -2 }}
+                className="text-center p-6 rounded-2xl glass hover:border-purple-500/30 transition-all duration-200"
               >
                 <AnimatedStat value={stat.value} />
-                <p className="text-white/60 mt-2">{stat.label}</p>
+                <p className="text-white/60 text-sm mt-2">{stat.label}</p>
               </motion.div>
             ))}
           </motion.div>

@@ -138,7 +138,7 @@ export function Hero() {
           {/* Greeting */}
           <motion.p
             variants={itemVariants}
-            className="text-base sm:text-lg text-white/60 mb-3 sm:mb-4"
+            className="text-base sm:text-lg text-white/60 mb-4"
           >
             {portfolio.hero.greeting}
           </motion.p>
@@ -146,7 +146,7 @@ export function Hero() {
           {/* Name */}
           <motion.h1
             variants={itemVariants}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-5 sm:mb-6"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.1] mb-6"
           >
             <span className="gradient-text">{portfolio.hero.name}</span>
           </motion.h1>
@@ -154,19 +154,19 @@ export function Hero() {
           {/* Animated Title */}
           <motion.div
             variants={itemVariants}
-            className="h-10 sm:h-14 mb-6 sm:mb-8 flex items-center justify-center"
+            className="h-12 sm:h-16 mb-8 flex items-center justify-center"
             aria-live="polite"
           >
-            <span className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white/85">
+            <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white/85">
               {displayedText}
-              <span className="inline-block w-0.5 h-8 sm:h-10 bg-white/80 ml-1 animate-pulse" />
+              <span className="inline-block w-0.5 h-7 sm:h-9 lg:h-11 bg-white/80 ml-1 animate-pulse" />
             </span>
           </motion.div>
 
           {/* Bio */}
           <motion.p
             variants={itemVariants}
-            className="text-base sm:text-lg md:text-xl text-white/65 leading-relaxed max-w-3xl mx-auto mb-8 sm:mb-10"
+            className="text-base sm:text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto mb-10 px-4"
           >
             {portfolio.personal.subtitle}
           </motion.p>
@@ -174,7 +174,7 @@ export function Hero() {
           {/* CTA Buttons */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-10"
+            className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-12"
           >
             <Button size="lg" className="group" asChild>
               <a href="/ANAND_N_resume_ATS_New.pdf" download>
@@ -203,7 +203,7 @@ export function Hero() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/70 hover:text-white hover:border-purple-500/50 transition-colors"
+                className="w-11 h-11 rounded-xl glass flex items-center justify-center text-white/70 hover:text-white hover:border-purple-500/50 transition-colors"
                 aria-label={social.label}
               >
                 <social.icon size={20} className="w-5 h-5" />

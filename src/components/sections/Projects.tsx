@@ -46,11 +46,11 @@ function ProjectCard({
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
         transition: "transform 0.2s ease-out",
       }}
-      className="group relative"
+      className="group relative h-full"
     >
-      <div className="relative h-full rounded-2xl glass overflow-hidden">
+      <div className="relative h-full rounded-2xl glass overflow-hidden hover:border-purple-500/30 transition-all duration-200">
         {/* Visual */}
-        <div className="relative aspect-video overflow-hidden">
+        <div className="relative aspect-video overflow-hidden bg-muted/10">
           {project.image ? (
             <Image
               src={project.image}
@@ -77,7 +77,7 @@ function ProjectCard({
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
-            className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent flex items-end p-6"
+            className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent flex items-end p-6"
           >
             <div className="flex gap-3">
               {project.github && (
@@ -108,7 +108,7 @@ function ProjectCard({
         {/* Content */}
         <div className="p-6">
           <div className="flex items-start justify-between gap-4 mb-3">
-            <h3 className="text-xl font-bold group-hover:text-purple-400 transition-colors">
+            <h3 className="text-xl font-bold group-hover:text-purple-400 transition-colors line-clamp-1">
               {project.title}
             </h3>
             {project.featured && (
@@ -118,7 +118,7 @@ function ProjectCard({
             )}
           </div>
 
-          <p className="text-white/60 text-sm mb-4 line-clamp-2">
+          <p className="text-white/60 text-sm leading-relaxed mb-4 line-clamp-2">
             {project.description}
           </p>
 
@@ -127,13 +127,13 @@ function ProjectCard({
             {project.tech.slice(0, 5).map((tech) => (
               <span
                 key={tech}
-                className="px-2 py-1 text-xs rounded-md bg-white/5 text-white/70"
+                className="px-2.5 py-1 text-xs rounded-md bg-white/5 text-white/70 border border-white/10"
               >
                 {tech}
               </span>
             ))}
             {project.tech.length > 5 && (
-              <span className="px-2 py-1 text-xs rounded-md bg-white/5 text-white/50">
+              <span className="px-2.5 py-1 text-xs rounded-md bg-white/5 text-white/50 border border-white/10">
                 +{project.tech.length - 5}
               </span>
             )}
@@ -180,7 +180,7 @@ export function Projects() {
     <section
       id="projects"
       ref={containerRef}
-      className="relative py-24 sm:py-32 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-32 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -194,12 +194,12 @@ export function Projects() {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
               Featured <span className="gradient-text">Projects</span>
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
-            <p className="mt-4 text-lg text-white/60 max-w-2xl mx-auto">
+            <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-purple-600 to-cyan-500 mx-auto rounded-full" />
+            <p className="mt-4 sm:mt-6 text-sm sm:text-base lg:text-lg text-white/60 max-w-2xl mx-auto px-4">
               A collection of projects that showcase my skills and passion for building
             </p>
           </motion.div>
